@@ -1,13 +1,13 @@
 import { Outlet } from "react-router";
 import Navbar from "../components/Navbar";
 
-const MainLayout = () => {
+const AuthLayout = () => {
   return (
-    <div className="min-h-dvh flex flex-col">
+    <div className="min-h-dvh">
       <Navbar />
-      <Outlet />
+      <Outlet/>
     </div>
   );
 };
 
-export default MainLayout;
+export default AuthLayout;

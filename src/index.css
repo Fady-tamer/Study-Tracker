@@ -1,1 +1,26 @@
 @import "tailwindcss";
+
+@theme {
+  /* Brand Identity */
+  --color-brand-primary: #2563eb; /* The Cobalt Blue from your logo */
+  --color-brand-light: #60a5fa;
+
+  /* Timer Phases */
+  --color-phase-focus: #f43f5e; /* Energetic Rose/Red for work periods */
+  --color-phase-break: #10b981; /* Calming Emerald Green for short breaks */
+  --color-phase-long: #8b5cf6; /* Deep Violet for long breaks */
+
+  /* Deep Dark Surfaces (Replacing standard gray) */
+  --color-surface-bg: #0f172a; /* Very dark slate for the main background */
+  --color-surface-panel: #1e293b; /* Lighter slate for your dashboard cards */
+  --color-surface-border: #334155; /* Subtle border color */
+
+  /* Typography / Text Colors */
+  --color-Typography-primary: #f8fafc; /* Bright off-white for headings and active timer numbers */
+  --color-Typography-secondary: #94a3b8; /* Muted slate for standard body Typography and task titles */
+  --color-Typography-muted: #475569; /* Darker slate for placeholders, subtle hints, and completed tasks */
+}
+
+body {
+  background-color: #0f172a;
+}
