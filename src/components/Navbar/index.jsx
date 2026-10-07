@@ -10,8 +10,8 @@ const Navbar = () => {
   const navigateTo = useNavigate();
 
   return (
-    <header className="mt-4">
-      <div className="container mx-auto p-4 rounded-2xl flex items-center justify-between border border-surface-border shadow-2xl bg-surface-panel">
+    <header className="sticky top-4 m-4">
+      <div className="max-w-470 mx-auto p-4 rounded-2xl flex items-center justify-between border border-surface-border shadow-2xl bg-white/10 backdrop-blur">
         {/* logo */}
         <div>
           <h1 className="text-2xl font-bold tracking-widest text-Typography-primary">
