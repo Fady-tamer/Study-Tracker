@@ -1,5 +1,6 @@
 import { BrowserRouter, Route, Routes } from "react-router";
 import { Toaster } from "react-hot-toast";
+import { Analytics } from '@vercel/analytics/react';
 
 // layouts
 import MainLayout from "./layouts/MainLayout";
@@ -25,6 +26,7 @@ function App() {
       </Routes>
 
       <Toaster position="top-right" />
+      <Analytics />
     </BrowserRouter>
   );
 }
