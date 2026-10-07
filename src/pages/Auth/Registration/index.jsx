@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router";
 import toast from "react-hot-toast";
 
 // components
-import InputGroup from "../../../components/inputGroup";
+import InputGroup from "../../../components/InputGroup";
 
 // supabase
 import { supabase } from "../../../supabaseClient";
