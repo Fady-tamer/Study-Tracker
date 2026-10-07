@@ -1,13 +1,17 @@
 import { Outlet } from "react-router";
 import Navbar from "../components/Navbar";
-import Footer from "../components/Footer";
+import Sidebar from "../components/Sidebar";
 
 const MainLayout = () => {
   return (
     <div className="min-h-dvh flex flex-col">
       <Navbar />
-      <Outlet />
-      <Footer />
+      <div className="grow flex mx-4">
+        <div className="grow flex mx-auto mb-4 max-w-470">
+          <Sidebar />
+          <Outlet />
+        </div>
+      </div>
     </div>
   );
 };

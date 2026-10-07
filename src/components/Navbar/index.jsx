@@ -10,11 +10,11 @@ const Navbar = () => {
   const navigateTo = useNavigate();
 
   return (
-    <header className="sticky top-4 m-4">
-      <div className="max-w-470 mx-auto p-4 rounded-2xl flex items-center justify-between border border-surface-border shadow-2xl bg-white/10 backdrop-blur">
+    <header className="m-4 mb-0">
+      <div className="max-w-470 mx-auto rounded-2xl rounded-b-none flex items-center justify-between border border-surface-border bg-surface-panel">
         {/* logo */}
-        <div>
-          <h1 className="text-2xl font-bold tracking-widest text-Typography-primary">
+        <div className="w-2/12 p-4 border-r border-surface-border">
+          <h1 className="text-center text-2xl font-extrabold tracking-widest text-brand-primary">
             Study Tracker
           </h1>
         </div>
@@ -25,7 +25,7 @@ const Navbar = () => {
             navigateTo("/");
             logout();
           }}
-          className="px-4 py-2 rounded-xl text-Typography-primary font-bold bg-phase-focus cursor-pointer"
+          className="m-4 px-4 py-2 rounded-xl text-white font-bold bg-red-500 cursor-pointer"
         >
           Logout
         </button>

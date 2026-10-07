@@ -48,7 +48,7 @@ const RegistrationPage = () => {
   };
 
   return (
-    <div className="w-full max-w-lg mx-auto my-4 p-8 rounded-3xl text-Typography-primary border border-surface-border bg-surface-panel shadow-2xl">
+    <div className="w-full max-w-lg mx-auto my-4 p-8 rounded-3xl text-Typography-primary border border-surface-border bg-surface-bg shadow-2xl">
       {/* header */}
       <div className="my-2 mb-8">
         <h1 className="text-center text-4xl font-bold tracking-tight">
@@ -98,7 +98,7 @@ const RegistrationPage = () => {
                   className={`w-full p-4 mt-2 rounded-xl font-bold text-white transition-all ${
                     isSubmitting || !(isValid && dirty)
                       ? "bg-surface-border cursor-not-allowed opacity-50"
-                      : "bg-phase-break hover:bg-opacity-90 cursor-pointer shadow-lg active:scale-[0.98]"
+                      : "bg-brand-primary hover:bg-opacity-90 cursor-pointer shadow-lg active:scale-[0.98]"
                   }`}
                 >
                   {isSubmitting ? "Signing Up..." : "Sign Up"}

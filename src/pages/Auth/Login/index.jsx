@@ -84,7 +84,7 @@ const LoginPage = () => {
                   className={`w-full p-4 mt-2 rounded-xl font-bold text-white transition-all ${
                     isSubmitting || !(isValid && dirty)
                       ? "bg-surface-border cursor-not-allowed opacity-50"
-                      : "bg-phase-break hover:bg-opacity-90 cursor-pointer shadow-lg active:scale-[0.98]"
+                      : "bg-brand-light hover:bg-opacity-90 cursor-pointer shadow-lg active:scale-[0.98]"
                   }`}
                 >
                   {isSubmitting ? "Logging in..." : "Login"}
