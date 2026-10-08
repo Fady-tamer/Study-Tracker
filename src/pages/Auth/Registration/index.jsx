@@ -41,7 +41,7 @@ const RegistrationPage = () => {
       toast.success("Registration successful!");
       navigateTo("/login");
     } catch (err) {
-      console.error("Unexpected error:", err);
+      toast.error("Unexpected error:", err);
     } finally {
       actions.setSubmitting(false);
     }
@@ -95,25 +95,25 @@ const RegistrationPage = () => {
                 <button
                   type="submit"
                   disabled={isSubmitting || !(isValid && dirty)}
-                  className={`w-full p-4 mt-2 rounded-xl font-bold text-white transition-all ${
+                  className={`w-full p-4 mt-2 rounded-xl font-bold transition-all ${
                     isSubmitting || !(isValid && dirty)
-                      ? "bg-surface-border cursor-not-allowed opacity-50"
-                      : "bg-brand-primary hover:bg-opacity-90 cursor-pointer shadow-lg active:scale-[0.98]"
+                      ? "text-Typography-muted bg-surface-border cursor-not-allowed opacity-50"
+                      : "text-white bg-brand-light hover:bg-opacity-90 cursor-pointer shadow-lg active:scale-[0.98]"
                   }`}
                 >
-                  {isSubmitting ? "Signing Up..." : "Sign Up"}
+                  {isSubmitting ? "Logging in..." : "Login"}
                 </button>
 
                 {/* footer */}
-                <p className="text-center text-Typography-primary text-sm font-medium mt-4">
-                  Already have an account? |{" "}
+                <div className="flex justify-center gap-1 text-Typography-primary font-semibold mt-4">
+                  <p>Already have an account |</p>
                   <Link
                     to={"/"}
                     className="text-brand-primary hover:text-brand-light transition-colors underline"
                   >
                     Login
                   </Link>
-                </p>
+                </div>
               </Form>
             );
           }}

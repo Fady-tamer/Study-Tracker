@@ -3,13 +3,16 @@ import { Toaster } from "react-hot-toast";
 import { Analytics } from "@vercel/analytics/react";
 
 // layouts
-import MainLayout from "./layouts/MainLayout";
 import AuthLayout from "./layouts/AuthLayout";
+import MainLayout from "./layouts/MainLayout";
 
 // pages
+import RegistrationPage from "./pages/Auth/Registration";
 import LoginPage from "./pages/Auth/Login";
 import Home from "./pages/Home";
-import RegistrationPage from "./pages/Auth/Registration";
+import CoursesPage from "./pages/Courses";
+import CourseDetailsPage from "./pages/CourseDetails";
+import ErrorPage from "./pages/Error";
 
 // routs
 import ProtectedPages from "./routes/ProtectedPages";
@@ -27,13 +30,22 @@ function App() {
         </Route>
 
         <Route element={<ProtectedPages />}>
-          <Route path="/home" element={<MainLayout />}>
-            <Route index element={<Home />} />
+          <Route element={<MainLayout />}>
+            <Route path="home" element={<Home />} />
+
+            {/* Courses layout route */}
+            <Route path="myCourses" element={<CoursesPage />} />
+            <Route path="myCourses/:id" element={<CourseDetailsPage />} />
+
+            {/* setting / user page */}
+            <Route path="setting" element />
           </Route>
         </Route>
+
+        <Route path="*" element={<ErrorPage />} />
       </Routes>
 
-      <Toaster position="top-right" />
+      <Toaster position="bottom-center" />
       <Analytics />
     </BrowserRouter>
   );

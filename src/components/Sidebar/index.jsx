@@ -10,22 +10,22 @@ import {
 
 const Sidebar = () => {
   return (
-    <div className="w-2/12 p-4 rounded-2xl rounded-t-none rounded-r-none border border-surface-border bg-surface-panel">
+    <div className="shrink-0 w-3/12 p-4 rounded-2xl rounded-t-none rounded-r-none border border-surface-border bg-surface-panel">
       <div>
         <p className="text-Typography-muted font-semibold">MAIN</p>
         <div className="p-4 flex flex-col gap-4">
           <NavLink
             to={"/home"}
-            className={`px-4 py-2 flex gap-2 items-center text-xl text-Typography-primary rounded-2xl`}
+            className={`px-4 py-2 flex gap-2 items-center text-base lg:text-xl text-Typography-primary rounded-2xl duration-300 hover:ease-in-out hover:scale-95`}
           >
-            <IoHomeOutline />
+            <IoHomeOutline className="hidden lg:block" />
             <p>Home</p>
           </NavLink>
           <NavLink
-            to={"/courses"}
-            className={`px-4 py-2 flex gap-2 items-center text-xl text-Typography-primary rounded-2xl`}
+            to={"/myCourses"}
+            className={`px-4 py-2 flex gap-2 items-center text-base lg:text-xl text-Typography-primary rounded-2xl duration-300 hover:ease-in-out hover:scale-95`}
           >
-            <IoBookOutline />
+            <IoBookOutline className="hidden lg:block" />
             <p>My Courses</p>
           </NavLink>
         </div>
@@ -35,9 +35,9 @@ const Sidebar = () => {
         <div className="p-4 flex flex-col gap-4">
           <NavLink
             to={"/setting"}
-            className={`px-4 py-2 flex gap-2 items-center text-xl text-Typography-primary rounded-2xl`}
+            className={`px-4 py-2 flex gap-2 items-center text-base lg:text-xl text-Typography-primary rounded-2xl duration-300 hover:ease-in-out hover:scale-95`}
           >
-            <IoSettingsOutline />
+            <IoSettingsOutline className="hidden lg:block" />
             <p>Settings</p>
           </NavLink>
         </div>
