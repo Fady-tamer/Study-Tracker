@@ -5,9 +5,32 @@ import TotalProgress from "../../components/TotalProgress";
 const Home = () => {
   return (
     <div className="grow flex">
-      <div className="grow grid md:grid-cols-2 lg:grid-cols-3 lg:grid-rows-3 gap-4 p-4 rounded-2xl rounded-t-none rounded-l-none text-Typography-primary border border-surface-border bg-surface-panel">
-        <TotalProgress className={`col-span-1`} />
-        <CoursesTable className={`col-span-2 max-h-65`} />
+      <div className="grow p-4 rounded-2xl rounded-t-none text-Typography-primary border border-surface-border bg-surface-panel">
+        {/* mobile */}
+        <div className="md:hidden flex flex-col gap-4">
+          <TotalProgress />
+          <CoursesTable />
+        </div>
+
+        {/* tablet */}
+        <div className="hidden md:flex lg:hidden flex-col gap-4">
+          <div className="flex gap-4">
+            <TotalProgress />
+            <TotalProgress />
+          </div>
+          <CoursesTable />
+        </div>
+
+        {/* laptop */}
+        <div className="hidden lg:flex flex-col gap-4">
+          <div className="flex gap-4">
+            <TotalProgress />
+            <TotalProgress />
+            <TotalProgress />
+          </div>
+          <CoursesTable />
+        </div>
+
         <AddCourse />
       </div>
     </div>

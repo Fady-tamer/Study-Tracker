@@ -2,6 +2,7 @@ import { useContext } from "react";
 
 // context
 import { mainStore } from "../../context/MainContext";
+import ProgressBar from "../ProgressBar";
 
 const TotalProgress = ({ className }) => {
   const { courses } = useContext(mainStore);
@@ -19,17 +20,11 @@ const TotalProgress = ({ className }) => {
 
   return (
     <div
-      className={`p-4 flex flex-col gap-6 justify-center items-center rounded-2xl border border-surface-border ${className}`}
+      className={`grow p-4 rounded-2xl border border-surface-border ${className}`}
     >
-      <p className="xl:text-2xl font-bold">Total Courses Progress</p>
-      <p className="xl:text-2xl font-bold">{percentage}%</p>
-
-      <div className="w-[80%] h-6 rounded-2xl border border-surface-border overflow-hidden bg-gray-100">
-        <div
-          className="h-6 rounded-full bg-green-500 transition-all duration-300"
-          style={{ width: `${percentage}%` }}
-        />
-      </div>
+      <p className="w-fit mx-auto lg:text-2xl font-bold">Total Courses Progress</p>
+      <p className="w-fit mx-auto my-2 lg:text-2xl font-bold">{percentage}%</p>
+      <ProgressBar progress={percentage} />
     </div>
   );
 };

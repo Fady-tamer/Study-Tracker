@@ -10,7 +10,7 @@ const CoursesPage = () => {
   return (
     <div className="grow flex">
       <div className="grow p-4 flex flex-col gap-4 rounded-2xl rounded-t-none rounded-l-none text-Typography-primary border border-surface-border bg-surface-panel">
-        <div className="py-4 pt-0 flex justify-between items-center">
+        <div className="pt-0 flex justify-between items-center">
           <p className="font-bold">My Courses</p>
           <button
             onClick={() => {

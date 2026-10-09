@@ -48,16 +48,16 @@ const CoursesTable = ({ className }) => {
     >
       {courses?.length > 0 ? (
         <table className="w-full">
-          <thead className="text-sm xl:text-base text-white bg-brand-light">
+          <thead className="text-sm md:text-base lg:text-xl text-white bg-brand-light">
             <tr>
               <th className="p-4">Topic Name</th>
-              <th className="p-4">Total Time (hr)</th>
-              <th className="p-4">Number oh Chapters</th>
+              <th className="hidden lg:table-cell p-4">Total Time (hr)</th>
+              <th className="hidden md:table-cell p-4">Number oh Chapters</th>
               <th className="p-4">Progress</th>
               <th className="p-4">Status</th>
             </tr>
           </thead>
-          <tbody className="text-Typography-primary text-center">
+          <tbody className="text-sm md:text-base lg:text-xl text-center text-Typography-primary">
             {courses.map(
               ({
                 id,
@@ -77,10 +77,10 @@ const CoursesTable = ({ className }) => {
                     <td className="px-4 py-6 font-semibold capitalize">
                       {topic_name}
                     </td>
-                    <td className="px-4 py-6 font-semibold capitalize">
+                    <td className="hidden lg:table-cell px-4 py-6 font-semibold capitalize">
                       {total_time}
                     </td>
-                    <td className="px-4 py-6 font-semibold capitalize">
+                    <td className="hidden md:table-cell px-4 py-6 font-semibold capitalize">
                       {total_chapters}
                     </td>
                     <td>
