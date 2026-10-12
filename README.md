@@ -130,7 +130,7 @@ The application uses four primary PostgreSQL tables with Row Level Security (RLS
 | `total_chapters` | `integer`| Total number of chapters in syllabus |
 | `done_chapters` | `integer`| Number of completed chapters |
 | `total_time` | `numeric` | Total minutes logged in focus study timer |
-| `status` | `text` | Current status (`'In Progress'`, `'Completed'`) |
+| `status` | `text` | Current status (`'in progress'`, `'completed'`) |
 | `created_at` | `timestamptz` | Record creation timestamp |
 
 ### `chapters`

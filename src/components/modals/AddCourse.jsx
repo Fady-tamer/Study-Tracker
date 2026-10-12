@@ -53,7 +53,7 @@ const AddCourse = () => {
             total_chapters: Number(values.total_chapters),
             done_chapters: 0,
             total_time: 0,
-            status: "In Progress",
+            status: "in progress",
           },
         ])
         .select()
