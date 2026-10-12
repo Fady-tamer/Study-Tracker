@@ -2,50 +2,76 @@ import { BrowserRouter, Route, Routes } from "react-router";
 import { Toaster } from "react-hot-toast";
 import { Analytics } from "@vercel/analytics/react";
 
+// context
+import MainContext from "./context/MainContext";
+
 // layouts
 import AuthLayout from "./layouts/AuthLayout";
 import MainLayout from "./layouts/MainLayout";
 
 // pages
-import RegistrationPage from "./pages/Auth/Registration";
-import LoginPage from "./pages/Auth/Login";
-import Home from "./pages/Home";
-import CoursesPage from "./pages/Courses";
-import CourseDetailsPage from "./pages/CourseDetails";
-import ErrorPage from "./pages/Error";
+import {
+  Home,
+  CoursesPage,
+  CourseDetailsPage,
+  AssignmentPage,
+  CalendarPage,
+  SettingPage,
+  ErrorPage,
+  LoginPage,
+  RegistrationPage,
+} from "./pages";
 
-// routs
+// routes
 import ProtectedPages from "./routes/ProtectedPages";
 import ProtectedAuth from "./routes/ProtectedAuth";
 
 function App() {
   return (
     <BrowserRouter>
-      <Routes>
-        <Route element={<ProtectedAuth />}>
-          <Route path="/" element={<AuthLayout />}>
-            <Route index element={<LoginPage />} />
-            <Route path="registration" element={<RegistrationPage />} />
+      <MainContext>
+        <Routes>
+          {/* Guest / Auth Routes */}
+          <Route element={<ProtectedAuth />}>
+            <Route path="/" element={<AuthLayout />}>
+              <Route index element={<LoginPage />} />
+              <Route path="registration" element={<RegistrationPage />} />
+            </Route>
           </Route>
-        </Route>
 
-        <Route element={<ProtectedPages />}>
-          <Route element={<MainLayout />}>
-            <Route path="home" element={<Home />} />
-
-            {/* Courses layout route */}
-            <Route path="myCourses" element={<CoursesPage />} />
-            <Route path="myCourses/:id" element={<CourseDetailsPage />} />
-
-            {/* setting / user page */}
-            <Route path="setting" element />
+          {/* Authenticated / App Routes */}
+          <Route element={<ProtectedPages />}>
+            <Route element={<MainLayout />}>
+              <Route path="home" element={<Home />} />
+              <Route path="myCourses" element={<CoursesPage />} />
+              <Route path="myCourses/:id" element={<CourseDetailsPage />} />
+              <Route path="assignments" element={<AssignmentPage />} />
+              <Route path="calendar" element={<CalendarPage />} />
+              <Route path="setting" element={<SettingPage />} />
+            </Route>
           </Route>
-        </Route>
 
-        <Route path="*" element={<ErrorPage />} />
-      </Routes>
+          {/* Catch-all 404 Route */}
+          <Route path="*" element={<ErrorPage />} />
+        </Routes>
+      </MainContext>
 
-      <Toaster position="bottom-center" />
+      {/* Global Utilities */}
+      <Toaster
+        position="top-right"
+        toastOptions={{
+          style: {
+            borderRadius: "14px",
+            background: "#ffffff",
+            color: "#0f172a",
+            fontSize: "13px",
+            fontWeight: "600",
+            border: "1px solid #e2e8f0",
+            boxShadow: "0 10px 25px -5px rgba(0, 0, 0, 0.08)",
+            padding: "12px 16px",
+          },
+        }}
+      />
       <Analytics />
     </BrowserRouter>
   );

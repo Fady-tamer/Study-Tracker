@@ -12,113 +12,125 @@ import { supabase } from "../../../supabaseClient";
 import validationSchema from "./validationSchema";
 
 const RegistrationPage = () => {
+  const navigateTo = useNavigate();
+
   const initialValues = {
-    userName: "",
+    username: "",
     email: "",
     password: "",
     confirmPassword: "",
   };
 
-  const navigateTo = useNavigate();
-
   const handleRegister = async (values, actions) => {
     try {
-      const { error } = await supabase.auth.signUp({
-        email: values.email,
+      const { data, error } = await supabase.auth.signUp({
+        email: values.email.trim().toLowerCase(),
         password: values.password,
         options: {
           data: {
-            display_name: values.userName,
+            display_name: values.username.trim(),
           },
         },
       });
 
       if (error) {
-        toast.error(`${error.message}`);
+        toast.error(error.message);
         return;
       }
 
-      toast.success("Registration successful!");
-      navigateTo("/login");
+      if (data?.session) {
+        toast.success("Account created successfully!");
+        navigateTo("/home");
+      } else {
+        toast.success(
+          "Registration successful! Please check your email to confirm your account.",
+        );
+        navigateTo("/");
+      }
     } catch (err) {
-      toast.error("Unexpected error:", err);
+      toast.error(err?.message || "An unexpected error occurred.");
     } finally {
       actions.setSubmitting(false);
     }
   };
 
   return (
-    <div className="w-full max-w-lg mx-auto my-4 p-8 rounded-3xl text-Typography-primary border border-surface-border bg-surface-bg shadow-2xl">
-      {/* header */}
-      <div className="my-2 mb-8">
-        <h1 className="text-center text-4xl font-bold tracking-tight">
+    <div className="w-full rounded-2xl border border-surface-border bg-white p-6 sm:p-8 shadow-xl shadow-slate-200/60">
+      <div className="mb-6 text-center">
+        <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-Typography-primary font-['Outfit']">
           Create Account
         </h1>
+        <p className="mt-1 text-xs sm:text-sm text-Typography-secondary">
+          Join Study Tracker to track your courses and deadlines
+        </p>
       </div>
 
-      {/* Registration form */}
-      <div className="my-2 mt-6">
-        <Formik
-          onSubmit={handleRegister}
-          initialValues={initialValues}
-          validationSchema={validationSchema}
-        >
-          {/* Properly destructured Formik props */}
-          {({ errors, isSubmitting, isValid, dirty }) => {
-            return (
-              <Form className="flex flex-col gap-5">
-                <InputGroup
-                  name="userName"
-                  placeholder="Username"
-                  error={errors.userName}
-                />
+      <Formik
+        initialValues={initialValues}
+        validationSchema={validationSchema}
+        onSubmit={handleRegister}
+      >
+        {({ errors, touched, isSubmitting, isValid, dirty }) => {
+          const isButtonDisabled = isSubmitting || !dirty || !isValid;
 
-                <InputGroup
-                  name="email"
-                  placeholder="Email Address"
-                  error={errors.email}
-                />
+          return (
+            <Form className="flex flex-col gap-4">
+              <InputGroup
+                name="username"
+                label="Full Name or Username"
+                placeholder="Alex Johnson"
+                error={touched.username && errors.username}
+              />
 
-                <InputGroup
-                  name="password"
-                  placeholder="••••••••"
-                  error={errors.password}
-                />
+              <InputGroup
+                name="email"
+                type="email"
+                label="Email Address"
+                placeholder="alex@example.com"
+                error={touched.email && errors.email}
+              />
 
-                <InputGroup
-                  name="confirmPassword"
-                  placeholder="••••••••"
-                  error={errors.confirmPassword}
-                />
+              <InputGroup
+                name="password"
+                type="password"
+                label="Password"
+                placeholder="••••••••"
+                error={touched.password && errors.password}
+              />
 
-                {/* submit button */}
-                <button
-                  type="submit"
-                  disabled={isSubmitting || !(isValid && dirty)}
-                  className={`w-full p-4 mt-2 rounded-xl font-bold transition-all ${
-                    isSubmitting || !(isValid && dirty)
-                      ? "text-Typography-muted bg-surface-border cursor-not-allowed opacity-50"
-                      : "text-white bg-brand-light hover:bg-opacity-90 cursor-pointer shadow-lg active:scale-[0.98]"
-                  }`}
+              <InputGroup
+                name="confirmPassword"
+                type="password"
+                label="Confirm Password"
+                placeholder="••••••••"
+                error={touched.confirmPassword && errors.confirmPassword}
+              />
+
+              <button
+                type="submit"
+                disabled={isButtonDisabled}
+                className={`w-full py-3.5 px-4 mt-2 rounded-xl text-sm font-bold transition-all ${
+                  isButtonDisabled
+                    ? "text-slate-400 bg-slate-100 cursor-not-allowed opacity-70"
+                    : "text-white bg-brand-primary hover:bg-brand-dark cursor-pointer shadow-sm shadow-brand-primary/25 active:scale-98"
+                }`}
+              >
+                {isSubmitting ? "Creating Account..." : "Create Free Account"}
+              </button>
+
+              <div className="mt-4 flex items-center justify-center gap-1.5 text-xs sm:text-sm font-medium text-Typography-secondary">
+                <span>Already have an account?</span>
+                <Link
+                  to="/"
+                  className="font-bold text-brand-primary hover:text-brand-dark transition-colors"
                 >
-                  {isSubmitting ? "Logging in..." : "Login"}
-                </button>
-
-                {/* footer */}
-                <div className="flex justify-center gap-1 text-Typography-primary font-semibold mt-4">
-                  <p>Already have an account |</p>
-                  <Link
-                    to={"/"}
-                    className="text-brand-primary hover:text-brand-light transition-colors underline"
-                  >
-                    Login
-                  </Link>
-                </div>
-              </Form>
-            );
-          }}
-        </Formik>
-      </div>
+                  Sign In
+                </Link>
+              </div>
+            </Form>
+          );
+        }}
+      </Formik>
     </div>
   );
 };

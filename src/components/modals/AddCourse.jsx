@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import { Form, Formik } from "formik";
 import * as Yup from "yup";
+import toast from "react-hot-toast";
 
 // components
 import InputGroup from "../InputGroup";
@@ -40,6 +41,9 @@ const AddCourse = () => {
         data: { user },
       } = await supabase.auth.getUser();
 
+      if (!user)
+        throw new Error("User session not found. Please log in again.");
+
       const { data, error } = await supabase
         .from("courses")
         .insert([
@@ -47,36 +51,54 @@ const AddCourse = () => {
             user_id: user.id,
             topic_name: values.topic_name.trim(),
             total_chapters: Number(values.total_chapters),
-            status: "in progress",
+            done_chapters: 0,
+            total_time: 0,
+            status: "In Progress",
           },
         ])
         .select()
         .single();
 
-      const newCourses = [...courses, data];
+      if (error) throw error;
+
+      // Update state and close modal ONLY on success
+      const newCourses = [...(courses || []), data];
       saveCourses(newCourses);
+      setShowAddCourse(false);
+      toast.success("Course added successfully!");
     } catch (err) {
       setStatus(err.message || "Failed to add course");
     } finally {
       setSubmitting(false);
-      setShowAddCourse(!showAddCourse);
     }
   };
 
   return showAddCourse ? (
     <div
-      onClick={() => {
-        setShowAddCourse(!showAddCourse);
-      }}
-      className="fixed inset-0 z-50 flex items-center justify-center bg-Typography-secondary/40 p-4"
+      onClick={() => setShowAddCourse(false)}
+      className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/50 backdrop-blur-sm p-4 animate-in fade-in duration-150"
     >
       <div
         onClick={(e) => e.stopPropagation()}
-        className="w-full max-w-lg rounded-2xl border border-surface-border bg-surface-panel p-6 shadow-xl"
+        className="w-full max-w-md rounded-2xl border border-surface-border bg-white p-6 shadow-2xl animate-in zoom-in-95 duration-150"
       >
-        <h2 className="text-xl font-bold text-Typography-primary mb-4">
-          Add Course
-        </h2>
+        <div className="flex items-center justify-between mb-5 border-b border-slate-100 pb-3">
+          <div>
+            <h2 className="text-lg font-bold text-Typography-primary font-['Outfit']">
+              Add New Course
+            </h2>
+            <p className="text-xs text-Typography-muted">
+              Add a curriculum to track chapters and time
+            </p>
+          </div>
+          <button
+            type="button"
+            onClick={() => setShowAddCourse(false)}
+            className="rounded-lg p-1 text-slate-400 hover:text-slate-600 hover:bg-slate-100 transition-colors cursor-pointer"
+          >
+            ✕
+          </button>
+        </div>
 
         <Formik
           initialValues={initialValues}
@@ -86,41 +108,41 @@ const AddCourse = () => {
           {({ errors, touched, isSubmitting, status }) => (
             <Form className="flex flex-col gap-4">
               {status && (
-                <div className="p-3 text-sm text-phase-focus bg-phase-focus/10 rounded-xl">
+                <div className="p-3 text-xs font-semibold text-rose-600 bg-rose-50 border border-rose-200 rounded-xl">
                   {status}
                 </div>
               )}
 
               <InputGroup
                 name="topic_name"
-                placeholder="Topic Name (e.g. Computer Science)"
+                label="Course Topic Name"
+                placeholder="e.g. Computer Science, Organic Chemistry"
                 error={touched.topic_name && errors.topic_name}
               />
 
               <InputGroup
                 name="total_chapters"
                 type="number"
-                placeholder="Number of chapters (e.g. 16)"
+                label="Number of Chapters"
+                placeholder="e.g. 12"
                 error={touched.total_chapters && errors.total_chapters}
               />
 
               {/* Action Buttons */}
-              <div className="flex justify-end gap-3 mt-4">
+              <div className="flex justify-end gap-2.5 mt-4 pt-2 border-t border-slate-100">
                 <button
                   type="button"
-                  onClick={() => {
-                    setShowAddCourse(!showAddCourse);
-                  }}
-                  className="px-5 py-2.5 rounded-xl border border-surface-border text-Typography-secondary hover:bg-surface-bg text-sm font-semibold transition-colors"
+                  onClick={() => setShowAddCourse(false)}
+                  className="px-4 py-2.5 rounded-xl border border-surface-border bg-white text-Typography-secondary hover:bg-slate-50 text-xs font-bold transition-colors cursor-pointer"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="px-5 py-2.5 rounded-xl bg-[#00c950] hover:bg-[#00b347] text-white text-sm font-semibold transition-colors disabled:opacity-50 cursor-pointer shadow-sm"
+                  className="px-5 py-2.5 rounded-xl bg-brand-primary hover:bg-brand-dark text-white text-xs font-bold transition-all disabled:opacity-50 cursor-pointer shadow-sm shadow-brand-primary/25 active:scale-95"
                 >
-                  {isSubmitting ? "Adding..." : "Add Course"}
+                  {isSubmitting ? "Creating..." : "Create Course"}
                 </button>
               </div>
             </Form>
@@ -130,4 +152,5 @@ const AddCourse = () => {
     </div>
   ) : null;
 };
+
 export default AddCourse;

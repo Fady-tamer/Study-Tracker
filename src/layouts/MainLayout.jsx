@@ -4,14 +4,16 @@ import Sidebar from "../components/Sidebar";
 
 const MainLayout = () => {
   return (
-    <div className="relative min-h-dvh flex flex-col">
+    <div className="relative min-h-screen flex flex-col bg-surface-bg selection:bg-brand-primary selection:text-white">
       <Navbar />
-      <div className="grow flex mx-4">
-        <div className="grow flex mx-auto mb-4 max-w-470">
+      <main className="w-full flex-1 px-3 py-4 sm:px-6 sm:py-6 lg:px-8">
+        <div className="mx-auto flex w-full max-w-7xl items-start gap-6">
           <Sidebar />
-          <Outlet />
+          <section className="min-w-0 flex-1">
+            <Outlet />
+          </section>
         </div>
-      </div>
+      </main>
     </div>
   );
 };

@@ -1,4 +1,3 @@
-import { useContext } from "react";
 import { Form, Formik } from "formik";
 import { Link, useNavigate } from "react-router";
 import toast from "react-hot-toast";
@@ -12,99 +11,93 @@ import { supabase } from "../../../supabaseClient";
 // validationSchema
 import validationSchema from "./validationSchema";
 
-// context
-import { mainStore } from "../../../context/MainContext";
-
 const LoginPage = () => {
   const initialValues = {
     email: "",
     password: "",
   };
 
-  const {} = useContext(mainStore);
-
   const navigateTo = useNavigate();
 
   const handleLogin = async (values, actions) => {
     try {
-      const { data, error } = await supabase.auth.signInWithPassword({
-        email: values.email,
+      const { error } = await supabase.auth.signInWithPassword({
+        email: values.email.trim().toLowerCase(),
         password: values.password,
       });
 
       if (error) {
-        toast.error(`Invalid email or password`);
+        toast.error("Invalid email or password");
         return;
       }
 
-      toast.success("login successful!");
+      toast.success("Login successful!");
       navigateTo("/home");
     } catch (err) {
-      toast.error("Unexpected error:", err);
+      toast.error(err.message || "An unexpected error occurred");
     } finally {
       actions.setSubmitting(false);
     }
   };
 
   return (
-    <div className="w-full max-w-lg mx-auto my-4 p-8 rounded-3xl text-Typography-primary border border-surface-border bg-surface-panel shadow-2xl">
-      {/* header */}
-      <div className="my-2 mb-8">
-        <h1 className="text-center text-4xl font-bold tracking-tight">
+    <div className="w-full rounded-2xl border border-surface-border bg-white p-6 sm:p-8 shadow-xl shadow-slate-200/60">
+      <div className="mb-6 text-center">
+        <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-Typography-primary font-['Outfit']">
           Welcome Back
         </h1>
+        <p className="mt-1 text-xs sm:text-sm text-Typography-secondary">
+          Enter your credentials to access your dashboard
+        </p>
       </div>
 
-      {/* logging form */}
-      <div className="my-2 mt-6">
-        <Formik
-          onSubmit={handleLogin}
-          initialValues={initialValues}
-          validationSchema={validationSchema}
-        >
-          {({ errors, isSubmitting, isValid, dirty }) => {
-            return (
-              <Form className="flex flex-col gap-5">
-                <InputGroup
-                  name="email"
-                  placeholder="Email Address"
-                  error={errors.email}
-                />
+      <Formik
+        onSubmit={handleLogin}
+        initialValues={initialValues}
+        validationSchema={validationSchema}
+      >
+        {({ errors, touched, isSubmitting, isValid, dirty }) => (
+          <Form className="flex flex-col gap-4">
+            <InputGroup
+              name="email"
+              type="email"
+              label="Email Address"
+              placeholder="student@example.com"
+              error={touched.email && errors.email}
+            />
 
-                <InputGroup
-                  name="password"
-                  placeholder="••••••••"
-                  error={errors.password}
-                />
+            <InputGroup
+              name="password"
+              type="password"
+              label="Password"
+              placeholder="••••••••"
+              error={touched.password && errors.password}
+            />
 
-                {/* submit button */}
-                <button
-                  type="submit"
-                  disabled={isSubmitting || !(isValid && dirty)}
-                  className={`w-full p-4 mt-2 rounded-xl font-bold transition-all ${
-                    isSubmitting || !(isValid && dirty)
-                      ? "text-Typography-muted bg-surface-border cursor-not-allowed opacity-50"
-                      : "text-white bg-brand-light hover:bg-opacity-90 cursor-pointer shadow-lg active:scale-[0.98]"
-                  }`}
-                >
-                  {isSubmitting ? "Logging in..." : "Login"}
-                </button>
+            <button
+              type="submit"
+              disabled={isSubmitting || !(isValid && dirty)}
+              className={`w-full py-3.5 px-4 mt-2 rounded-xl text-sm font-bold transition-all ${
+                isSubmitting || !(isValid && dirty)
+                  ? "text-slate-400 bg-slate-100 cursor-not-allowed opacity-70"
+                  : "text-white bg-brand-primary hover:bg-brand-dark cursor-pointer shadow-sm shadow-brand-primary/25 active:scale-98"
+              }`}
+            >
+              {isSubmitting ? "Signing in..." : "Sign In to Dashboard"}
+            </button>
 
-                {/* footer */}
-                <div className="flex justify-center gap-1 text-Typography-primary font-semibold mt-4">
-                  <p>don't have an account |</p>
-                  <Link
-                    to={"/registration"}
-                    className="text-brand-primary hover:text-brand-light transition-colors underline"
-                  >
-                    SignUp
-                  </Link>
-                </div>
-              </Form>
-            );
-          }}
-        </Formik>
-      </div>
+            <div className="mt-4 flex items-center justify-center gap-1.5 text-xs sm:text-sm font-medium text-Typography-secondary">
+              <span>Don't have an account?</span>
+              <Link
+                to="/registration"
+                className="font-bold text-brand-primary hover:text-brand-dark transition-colors"
+              >
+                Sign Up
+              </Link>
+            </div>
+          </Form>
+        )}
+      </Formik>
     </div>
   );
 };

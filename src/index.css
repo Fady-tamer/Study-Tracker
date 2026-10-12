@@ -1,36 +1,99 @@
 @import "tailwindcss";
 
 @theme {
-  /* Brand Identity */
-  --color-brand-primary: #2563eb; /* Cobalt Blue */
-  --color-brand-light: #3b82f6; /* Slightly deeper light blue for contrast on white */
+  /* Brand Identity - Refined Modern Indigo / Violet */
+  --color-brand-primary: #4f46e5; /* Vibrant Indigo */
+  --color-brand-light: #6366f1; /* Energetic Light Indigo */
+  --color-brand-dark: #3730a3; /* Deep Royal Indigo */
+  --color-brand-soft: #eef2ff; /* Pale Indigo Tint */
 
-  /* Timer Phases */
-  --color-phase-focus: #e11d48; /* Energetic Rose/Red (adjusted for light mode legibility) */
-  --color-phase-break: #059669; /* Calming Emerald Green */
-  --color-phase-long: #7c3aed; /* Deep Violet */
+  /* Timer & Status Phases */
+  --color-phase-focus: #f43f5e; /* Rose 500 */
+  --color-phase-break: #10b981; /* Emerald 500 */
+  --color-phase-long: #8b5cf6; /* Violet 500 */
 
-  /* Clean White Surfaces */
-  --color-surface-bg: #f8fafc; /* Soft slate off-white for the main background */
-  --color-surface-panel: #ffffff; /* Pure crisp white for cards and panels */
-  --color-surface-border: #e2e8f0; /* Subtle light gray border */
+  /* Surfaces & Elevation */
+  --color-surface-bg: #f8fafc; /* Slate 50 background */
+  --color-surface-panel: #ffffff; /* Crisp Pure White */
+  --color-surface-card: #ffffff;
+  --color-surface-border: #e2e8f0; /* Slate 200 border */
+  --color-surface-border-subtle: #f1f5f9; /* Slate 100 border */
 
   /* Typography / Text Colors */
-  --color-Typography-primary: #0f172a; /* Deep slate for headings and main active numbers */
-  --color-Typography-secondary: #475569; /* Slate gray for standard body copy and titles */
-  --color-Typography-muted: #94a3b8; /* Light slate for placeholders and subtle hints */
+  --color-Typography-primary: #0f172a; /* Slate 900 */
+  --color-Typography-secondary: #475569; /* Slate 600 */
+  --color-Typography-muted: #94a3b8; /* Slate 400 */
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }
 
 body {
+  margin: 0;
+  min-height: 100vh;
   background-color: var(--color-surface-bg);
+  background-image: 
+    radial-gradient(at 0% 0%, rgba(99, 102, 241, 0.03) 0px, transparent 50%),
+    radial-gradient(at 100% 100%, rgba(16, 185, 129, 0.03) 0px, transparent 50%);
   color: var(--color-Typography-primary);
+  overflow-x: hidden;
+  font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
 }
 
-.active {
-  color: #fff;
-  background-color: var(--color-brand-light);
+#root {
+  min-height: 100vh;
 }
 
-.coursesTable::-webkit-scrollbar{
-  width: 0;
+/* Custom Scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+.coursesTable::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+
+/* Glassmorphism helpers */
+.glass-panel {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(226, 232, 240, 0.8);
+}
+
+.glass-modal {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+/* Card hover glow */
+.card-hover {
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.card-hover:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.03);
 }
